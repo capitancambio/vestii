@@ -32,7 +32,7 @@ class State(object):
     def update_vestii(self):
         self.vestii.UpdateVestii(self.polarities, self.currents)
 
-state = State(VestiiInterface.Vestii)
+state = State(VestiiInterface.Vestii())
 root = tk.Tk()
 
 root.geometry("%dx%d" % (200, 200))
