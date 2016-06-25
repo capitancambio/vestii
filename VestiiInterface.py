@@ -65,8 +65,12 @@ class Vestii(object):
 
             if self.Connected is False:
                 print('The fuck you doing')
+                ToSend = str(self.NumElec)
+                for y in range(0, self.NumElec):
+                    ToSend = ToSend + (str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(
+                        self.State["ElectrodePol{0}".format(y)]) + '$')
+                ToSend = ToSend + '\n'  # Control string to send to Arduino
+                print(ToSend)  # Prints string
 
         self.History = self.State
 
-# print('------------------Vestii V1------------------')
-# print('Control Vestii project from a computer')
