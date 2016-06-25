@@ -1,12 +1,14 @@
 
 
 // Electrode 1
-int pin_electrode_1_polarity = 2;
-int pin_electrode_1_current = 9; // Needs to be a PWM pin to be able to control motor speed
 
+int pin_electrode_1_current = 10; // Needs to be a PWM pin to be able to control motor speed
+int pin_electrode_1_polarity_A = 9;
+int pin_electrode_1_polarity_B = 8;
 // Electrode 2
-int pin_electrode_2_polarity = 4;
-int pin_electrode_2_current = 10; // Needs to be a PWM pin to be able to control motor speed
+int pin_electrode_2_polarity_A = 7;
+int pin_electrode_2_polarity_B = 6;
+int pin_electrode_2_current = 9; // Needs to be a PWM pin to be able to control motor speed
 
 
 void setup() {
@@ -15,22 +17,29 @@ void setup() {
 
   //Define L298N Dual H-Bridge Motor Controller Pins
 
-  pinMode(pin_electrode_1_polarity,OUTPUT);
+  pinMode(pin_electrode_1_polarity_A,OUTPUT);
+  pinMode(pin_electrode_1_polarity_B,OUTPUT);
   pinMode(pin_electrode_1_current,OUTPUT);
-  pinMode(pin_electrode_2_polarity,OUTPUT);
+
+  pinMode(pin_electrode_2_polarity_A,OUTPUT);
+  pinMode(pin_electrode_2_polarity_B,OUTPUT);
   pinMode(pin_electrode_2_current,OUTPUT);
 
   analogWrite(pin_electrode_1_current,0);
   analogWrite(pin_electrode_2_current,0);
-  digitalWrite(pin_electrode_1_polarity,LOW);
-  digitalWrite(pin_electrode_2_polarity,LOW);
+  digitalWrite(pin_electrode_1_polarity_A,LOW);
+  digitalWrite(pin_electrode_1_polarity_B,HIGH);
+  
+  digitalWrite(pin_electrode_2_polarity_A,LOW);
+  digitalWrite(pin_electrode_2_polarity_B,HIGH);
 
   Serial.begin(9600);
 }
 
 void loop() {
-  int electrode_1_polarity = LOW;
-  int electrode_2_polarity = LOW;
+  //allowed values are 0 or 1 for polarity
+  int electrode_1_polarity = 0;
+  int electrode_2_polarity = 0;
   
   int electrode_1_current = 0;
   int electrode_2_current = 0;
@@ -59,26 +68,25 @@ void loop() {
           }}
 
 
-
-
-
-
-
-
-
-
-
-
-
-  if (Serial.available() > 0) {
-
-  }
   //write currents
   analogWrite(pin_electrode_1_current,electrode_1_current);
   analogWrite(pin_electrode_2_current,electrode_2_current);
   //write polarities
-  digitalWrite(pin_electrode_1_polarity,electrode_1_polarity);
-  digitalWrite(pin_electrode_2_polarity,electrode_2_polarity);
+  if (electrode_1_polarity == 0){
+    digitalWrite(pin_electrode_1_polarity_A,LOW);
+    digitalWrite(pin_electrode_1_polarity_B,HIGH);
+  }else{
+    digitalWrite(pin_electrode_1_polarity_A,HIGH);
+    digitalWrite(pin_electrode_1_polarity_B,LOW);
+  }
+  
+  if (electrode_2_polarity == 0){
+    digitalWrite(pin_electrode_2_polarity_A,LOW);
+    digitalWrite(pin_electrode_2_polarity_B,HIGH);
+  }else{
+    digitalWrite(pin_electrode_2_polarity_A,HIGH);
+    digitalWrite(pin_electrode_2_polarity_B,LOW);
+  }
   //wait
   delay(100);
   
