@@ -3,7 +3,6 @@ import serial
 import glob
 import platform
 import os
-import numpy as np
 
 
 """A part of the Vestii project during Hack the Senses
