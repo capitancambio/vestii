@@ -13,12 +13,12 @@ Copyright (c) 2016 David J Turner.  All right reserved
 """
 
 __author__ = 'David Turner'
-NumOfElectrodes = 2
 
 
 class Vestii(object):
 
     def __init__(self):  # Runs on declaration of new Vestii object
+        self.NumElec = 4
         SysID = platform.system()  # Uses platform module to identify Windows/Mac/Other
 
         if SysID == 'Windows':
@@ -47,7 +47,7 @@ class Vestii(object):
     def UpdateVestii(self, EListPol, EListCur):
         EDict = {}
 
-        for i in range(0, len(EListPol)):
+        for i in range(0, self.NumElec):
             EDict["ElectrodePol{0}".format(i)] = EListPol[i]
             EDict["ElectrodeCur{0}".format(i)] = EListCur[i]
 
@@ -55,12 +55,13 @@ class Vestii(object):
 
         if self.State != self.History:
             if self.Connected is True:  # Only send update if data has changed
-                self.Interface.write(str(ChangeMatrix[y, x]) + '#' + str((self.shape * y) + x + 1) + '\n')
-                # Utilises serial connection to Arduino
+                self.Interface.write(str(self.NumElec))
+                for y in range(0, self.NumElec):
+                    self.Interface.write(str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(self.State["ElectrodePol{0}".format(y)]) + '$')
+                self.Interface.write('\n')
 
             if self.Connected is False:
                 print('The fuck you doing')
-                print(self.state)
 
         self.History = self.State
 
@@ -71,7 +72,7 @@ EListPol = [0, 1, 0, 1]
 EListCur = [0.3, 0.2, 0.3, 0.1]
 
 Device = Vestii()
-Device.SetState(EListPol, EListCur)
+Device.UpdateVestii(EListPol, EListCur)
 
 
 
