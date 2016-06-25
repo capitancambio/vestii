@@ -8,7 +8,7 @@ int pin_electrode_1_polarity_B = 8;
 // Electrode 2
 int pin_electrode_2_polarity_A = 7;
 int pin_electrode_2_polarity_B = 6;
-int pin_electrode_2_current = 9; // Needs to be a PWM pin to be able to control motor speed
+int pin_electrode_2_current = 5; // Needs to be a PWM pin to be able to control motor speed
 
 
 void setup() {
