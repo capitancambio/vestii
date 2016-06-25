@@ -17,8 +17,8 @@ __author__ = 'David Turner'
 
 class Vestii(object):
 
-    def __init__(self):  # Runs on declaration of new Vestii object
-        self.NumElec = 4
+    def __init__(self, NumElec=2):  # Runs on declaration of new Vestii object
+        self.NumElec = NumElec 
         SysID = platform.system()  # Uses platform module to identify Windows/Mac/Other
 
         if SysID == 'Windows':
@@ -45,6 +45,10 @@ class Vestii(object):
         self.History = {}
 
     def UpdateVestii(self, EListPol, EListCur):
+        """ 
+        :EListPol: is a list with the polarities 
+        :EListCur: is a list of currents  
+        """
         EDict = {}
 
         for i in range(0, self.NumElec):
@@ -65,14 +69,14 @@ class Vestii(object):
 
         self.History = self.State
 
-print('------------------Vestii V1------------------')
-print('Control Vestii project from a computer')
+# print('------------------Vestii V1------------------')
+# print('Control Vestii project from a computer')
 
-EListPol = [0, 1, 0, 1]
-EListCur = [0.3, 0.2, 0.3, 0.1]
+# EListPol = [0, 1, 0, 1]
+# EListCur = [0.3, 0.2, 0.3, 0.1]
 
-Device = Vestii()
-Device.UpdateVestii(EListPol, EListCur)
+# Device = Vestii()
+# Device.UpdateVestii(EListPol, EListCur)
 
 
 
