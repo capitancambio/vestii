@@ -45,20 +45,21 @@ class Vestii(object):
         self.History = {}
 
     def UpdateVestii(self, EListPol, EListCur):
-        EDict = {}
+        EDict = {}  # Electrode Dictionary
 
         for i in range(0, self.NumElec):
-            EDict["ElectrodePol{0}".format(i)] = EListPol[i]
-            EDict["ElectrodeCur{0}".format(i)] = EListCur[i]
+            EDict["ElectrodePol{0}".format(i)] = EListPol[i]  # ElectrodePol is a polarity value
+            EDict["ElectrodeCur{0}".format(i)] = EListCur[i]  # ElectrodeCur is a current value
 
         self.State = EDict
 
         if self.State != self.History:
             if self.Connected is True:  # Only send update if data has changed
-                self.Interface.write(str(self.NumElec))
+                ToSend = str(self.NumElec)
                 for y in range(0, self.NumElec):
-                    self.Interface.write(str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(self.State["ElectrodePol{0}".format(y)]) + '$')
-                self.Interface.write('\n')
+                    ToSend = ToSend + (str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(self.State["ElectrodePol{0}".format(y)]) + '$')
+                ToSend = ToSend + '\n'  # Control string to send to Arduino
+                self.Interface.write(ToSend)  # Writes over serial to Arduino
 
             if self.Connected is False:
                 print('The fuck you doing')
@@ -68,45 +69,9 @@ class Vestii(object):
 print('------------------Vestii V1------------------')
 print('Control Vestii project from a computer')
 
-EListPol = [0, 1, 0, 1]
-EListCur = [0.3, 0.2, 0.3, 0.1]
-
-Device = Vestii()
-Device.UpdateVestii(EListPol, EListCur)
 
 
 
 
 
 
-
-
-"""
-
-def setState(self, AngleState):  # To be called when the stored state of the display needs to be changed
-    ChangedTo = np.zeros((self.shape[0], self.shape[1]))  # AngleState MUST be passed in as a sLen by sLen matrix
-    for y in xrange(self.shape[0]):  # Moves through the 2D array representing the TGD
-        for x in xrange(self.shape[1]):
-            ChangedTo[y, x] = (-1 if self.state[y, x] == AngleState[y, x] else AngleState[y, x])
-            # ChangedTo matrix stores the new values of changed taxels, no change is represented by -1
-    self.state = AngleState  # Then updates current state
-    return ChangedTo
-
-
-def updateDisplay(self, ChangeMatrix):  # Pushes update to display
-    for y in xrange(self.shape[0]):  # Cycles through every taxel on display
-        for x in xrange(self.shape[1]):
-            if self.Connected is True and ChangeMatrix[y, x] > 0:  # Will only move taxels that have changed
-                self.Interface.write(str(ChangeMatrix[y, x]) + '#' + str((self.shape * y) + x + 1) + '\n')
-                # Utilises serial connection to Arduino
-    if self.Connected is False:
-        print(ChangeMatrix)
-        print(self.state)
-
-
-def resetDisplay(self):  # Sets all taxels to zero state
-    Reset = np.zeros((self.shape[0], self.shape[1]), dtype=int)
-    Reset.fill(MinServoAng)
-    ChangedTo = TGD.setState(self, Reset)
-    TGD.updateDisplay(self, ChangedTo)
-"""
