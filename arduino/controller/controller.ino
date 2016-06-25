@@ -3,13 +3,13 @@
 
 // Electrode 1
 
-int pin_electrode_1_current = 10; // Needs to be a PWM pin to be able to control motor speed
-int pin_electrode_1_polarity_A = 9;
-int pin_electrode_1_polarity_B = 8;
+int pin_electrode_1_current = 9; // Needs to be a PWM pin to be able to control motor speed
+int pin_electrode_1_polarity_A = 2;
+int pin_electrode_1_polarity_B = 3;
 // Electrode 2
-int pin_electrode_2_polarity_A = 7;
-int pin_electrode_2_polarity_B = 6;
-int pin_electrode_2_current = 5; // Needs to be a PWM pin to be able to control motor speed
+int pin_electrode_2_polarity_A = 4;
+int pin_electrode_2_polarity_B = 5;
+int pin_electrode_2_current = 10; // Needs to be a PWM pin to be able to control motor speed
 
 String InBuffer;
 String Sub2;
@@ -87,7 +87,10 @@ void loop() {
         electrode_2_current = CurArray[1];  // Need to figure out how to dynamically declare variables
         electrode_1_polarity = PolArray[0];
         electrode_2_polarity = PolArray[1];
-
+        Serial.print(electrode_1_current);
+        Serial.print(electrode_2_current);
+        Serial.print(electrode_1_polarity);
+        Serial.print(electrode_2_polarity);
         InBuffer = ""; // This resets the buffer
           }}
 
