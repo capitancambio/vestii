@@ -1,5 +1,5 @@
 import Tkinter as tk
-import Vestii
+import VestiiInterface
 
 
 class State(object):
