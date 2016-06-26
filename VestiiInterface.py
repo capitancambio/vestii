@@ -74,3 +74,11 @@ class Vestii(object):
 
         self.History = self.State
 
+    def ZeroVestii(self):
+        ZeroPol = []
+        ZeroCur = []
+        for i in range(0, self.NumElec):
+            ZeroPol.append(0)
+            ZeroCur.append(0)
+
+        self.UpdateVestii(ZeroPol, ZeroCur)
