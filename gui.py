@@ -5,31 +5,32 @@ import VestiiInterface
 class State(object):
 
     def __init__(self, vestii):
-        self.currents = [0., 0.]
-        self.polarities = [0., 0.]
+        self.currents = [0, 0]
+        self.polarities = [0, 0]
         self.vestii = vestii
 
     def update_current_1(self, event):
         self.currents[0] = int(event)
-        print "Updated currents", self.currents
+        # print "Updated currents", self.currents
         self.update_vestii()
 
     def update_current_2(self, event):
         self.currents[1] = int(event)
-        print "Updated currents", self.currents
+        # print "Updated currents", self.currents
         self.update_vestii()
 
     def update_polarity_1(self, ):
         self.polarities[0] = (self.polarities[0] + 1) % 2
-        print "Updated polarities", self.polarities
+        # print "Updated polarities", self.polarities
         self.update_vestii()
 
     def update_polarity_2(self):
         self.polarities[1] = (self.polarities[1] + 1) % 2
-        print "Updated polarities", self.polarities
+        # print "Updated polarities", self.polarities
         self.update_vestii()
 
     def update_vestii(self):
+        print self.polarities, self.currents
         self.vestii.UpdateVestii(self.polarities, self.currents)
 
 state = State(VestiiInterface.Vestii())

@@ -57,20 +57,23 @@ class Vestii(object):
 
         if self.State != self.History:
             if self.Connected is True:  # Only send update if data has changed
-                ToSend = str(self.NumElec)
-                for y in range(0, self.NumElec):
-                    ToSend = ToSend + (str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(self.State["ElectrodePol{0}".format(y)]) + '$')
-                ToSend = ToSend + '\n'  # Control string to send to Arduino
-                self.Interface.write(ToSend)  # Writes over serial to Arduino
-
+                # ToSend = str(self.NumElec)
+                # for y in range(0, self.NumElec):
+                    # ToSend = ToSend + (str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(self.State["ElectrodePol{0}".format(y)]) + '$')
+                # ToSend = ToSend + '\n'  # Control string to send to Arduino
+                # self.Interface.write(ToSend)  # Writes over serial to Arduino
+                to_send = "%d%d%3d%3d\n" % (EListPol[0],EListPol[1], EListCur[0],EListCur[1])
+                self.Interface.write(to_send)
+                print "SENT!!!", to_send
+                # print "Read", self.Interface.read(1)
             if self.Connected is False:
                 print('The fuck you doing')
-                ToSend = str(self.NumElec)
-                for y in range(0, self.NumElec):
-                    ToSend = ToSend + (str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(
-                        self.State["ElectrodePol{0}".format(y)]) + '$')
-                ToSend = ToSend + '\n'  # Control string to send to Arduino
-                print(ToSend)  # Prints string
+                # ToSend = str(self.NumElec)
+                # for y in range(0, self.NumElec):
+                    # ToSend = ToSend + (str(self.State["ElectrodeCur{0}".format(y)]) + '#' + str(
+                        # self.State["ElectrodePol{0}".format(y)]) + '$')
+                # ToSend = ToSend + '\n'  # Control string to send to Arduino
+                # print(ToSend)  # Prints string
 
         self.History = self.State
 
