@@ -28,7 +28,8 @@ class Vestii(object):
 
         elif SysID == 'Darwin':
             PortString = str(glob.glob("/dev/tty.usbmodem*")) # OS X port list
-            ArduinoPort = PortString[2: (len(PortString)) - 2]
+            #ArduinoPort = PortString[2: (len(PortString)) - 2]
+            ArduinoPort = "/dev/cu.usbmodem1411"
 
         else:
             ArduinoPort = "/dev/" + os.popen("dmesg | egrep ttyACM | cut -f3 -d: | tail -n1").read().strip()
@@ -36,11 +37,12 @@ class Vestii(object):
         try:  # Tries to connect to the Arduino, if not possible then error is displayed
             self.Interface = serial.Serial(ArduinoPort, 9600)
             self.Connected = True  # Interface and Connected defined as class attributes
-        except OSError:
+        except OSError as x:
+            print(x)
             print('There seems to be an issue connecting')
             print('Either the Arduino is not connected, or Arduino serial monitor is open and accessing the port' + '\n')
             self.Connected = False
-
+            exit()
         self.History = {}
 
     def UpdateVestii(self, EListPol, EListCur):
@@ -64,7 +66,7 @@ class Vestii(object):
                 # self.Interface.write(ToSend)  # Writes over serial to Arduino
                 to_send = "%d%d%3d%3d\n" % (EListPol[0],EListPol[1], EListCur[0],EListCur[1])
                 self.Interface.write(to_send)
-                print "SENT!!!", to_send
+                #print "SENT!!!", to_send
                 # print "Read", self.Interface.read(1)
             if self.Connected is False:
                 print('The fuck you doing')
