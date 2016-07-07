@@ -22,7 +22,7 @@ class RawWindow(QtGui.QMainWindow):
     def __init__(self):
         super(RawWindow, self).__init__()
         self.setWindowTitle('Myo Data Acquirer')
-        self.resize(800,480)
+        self.resize(800, 480)
         cw = QtGui.QWidget()
         self.setCentralWidget(cw)
         l = QtGui.QGridLayout()
